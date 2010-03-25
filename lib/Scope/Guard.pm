@@ -7,7 +7,7 @@ use Exporter ();
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(guard scope_guard);
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 sub new {
     my $class = shift;
@@ -53,11 +53,11 @@ Scope::Guard - lexically scoped resource management
 
       # or
 
-    my $guard = scope_guard \&handler; # or sub { ... } or $handler
+    my $guard = scope_guard \&handler;
 
       # or
 
-    my $guard = Scope::Guard->new(\&handler); # or sub { ... } or $handler
+    my $guard = Scope::Guard->new(\&handler);
 
     $guard->dismiss(); # disable the handler
 
@@ -70,13 +70,11 @@ be called even if the thread of execution is aborted prematurely. This effective
 lexically-scoped "promises" to be made that are automatically honoured by perl's garbage
 collector.
 
-For more information, see: L<http://www.cuj.com/documents/s=8000/cujcexp1812alexandr/>
+For more information, see: L<http://www.drdobbs.com/cpp/184403758>
 
 =head1 METHODS
 
 =head2 new
-
-=head3 usage
 
     my $guard = Scope::Guard->new(sub { ... });
 
@@ -84,14 +82,10 @@ For more information, see: L<http://www.cuj.com/documents/s=8000/cujcexp1812alex
 
     my $guard = Scope::Guard->new(\&handler);
 
-=head3 description
-
 The C<new> method creates a new C<Scope::Guard> object which calls the supplied handler when its C<DESTROY> method is
 called, typically when it goes out of scope.
 
 =head2 dismiss
-
-=head3 usage
 
     $guard->dismiss();
 
@@ -99,14 +93,12 @@ called, typically when it goes out of scope.
 
     $guard->dismiss(1);
 
-=head3 description
-
 C<dismiss> detaches the handler from the C<Scope::Guard> object. This revokes the "promise" to call the
 handler when the object is destroyed.
 
 The handler can be re-enabled by calling:
 
-	$guard->dismiss(0);
+    $guard->dismiss(0);
 
 =head1 EXPORTS
 
@@ -133,7 +125,7 @@ managed e.g.
 	unless ($resource->disposed) {
             $resource->dispose;
 	}
-    }
+    };
 
 =head2 scope_guard
 
@@ -154,7 +146,7 @@ Like C<guard>, it can be called in void context to install an anonymous guard in
 
 =head1 VERSION
 
-0.10
+0.11
 
 =head1 SEE ALSO
 
@@ -182,7 +174,7 @@ Like C<guard>, it can be called in void context to install an anonymous guard in
 
 =head1 AUTHOR
 
-chocolateboy: <chocolate@cpan.org>
+chocolateboy <chocolate@cpan.org>
 
 =head1 COPYRIGHT
 
